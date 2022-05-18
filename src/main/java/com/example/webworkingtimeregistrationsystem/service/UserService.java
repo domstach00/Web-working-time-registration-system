@@ -25,4 +25,8 @@ public class UserService {
     public List<User> selectAllUsers(){
         return userDao.selectUsers();
     }
+
+    public User selectUser(int id){
+        return userDao.selectUser(id);
+    }
 }

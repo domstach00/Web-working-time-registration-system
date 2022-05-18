@@ -22,7 +22,7 @@ public class UserController {
         userService.insertUser(user);
     }
 
-    @GetMapping
+    @GetMapping("all")
     public List<User> getAllUsers(){
         return userService.selectAllUsers();
     }
