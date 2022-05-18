@@ -1,0 +1,8 @@
+CREATE TABLE Role (IdU INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, RoleName varchar(255) NOT NULL, AccessLevel integer(10) NOT NULL);
+CREATE TABLE "User" (IdU INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Email varchar(255) NOT NULL UNIQUE, Password integer(11) NOT NULL, FirstName varchar(255), LastName varchar(255), PhoneNr varchar(15), Fk_role integer(10) NOT NULL, FOREIGN KEY(Fk_role) REFERENCES Role(IdU));
+CREATE TABLE ProjectGroup (IdPG INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ProjectName integer(11));
+CREATE TABLE Event (IdE INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Description varchar(255), StartDate date NOT NULL, EndDate date NOT NULL);
+CREATE TABLE Assigment (IdA INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, IsComplete integer(1) DEFAULT '0', Fk_ProjectGroup integer(10) NOT NULL, Fk_Event integer(10) NOT NULL, FOREIGN KEY(Fk_ProjectGroup) REFERENCES ProjectGroup(IdPG), FOREIGN KEY(Fk_Event) REFERENCES Event(IdE));
+CREATE TABLE DayOff (IdDO INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Fk_DayOffType integer(10) NOT NULL, Fk_Event integer(10) NOT NULL, Fk_User integer(10) NOT NULL, FOREIGN KEY(Fk_Event) REFERENCES Event(IdE), FOREIGN KEY(Fk_DayOffType) REFERENCES DayOffType(IdDOT), FOREIGN KEY(Fk_User) REFERENCES "User"(IdU));
+CREATE TABLE DayOffType (IdDOT INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, DayOffTypeName varchar(255) NOT NULL, Description varchar(255));
+CREATE TABLE User_ProjectGroup (UserIdU integer(10) NOT NULL, ProjectGroupIdPG integer(10) NOT NULL, PRIMARY KEY (UserIdU, ProjectGroupIdPG), FOREIGN KEY(UserIdU) REFERENCES "User"(IdU), FOREIGN KEY(ProjectGroupIdPG) REFERENCES ProjectGroup(IdPG));
