@@ -1,4 +1,4 @@
-package com.example.webworkingtimeregistrationsystem.system.events;
+package com.example.webworkingtimeregistrationsystem.system_DO_NOT_USE_NOW.events;
 
 public class Event {
 

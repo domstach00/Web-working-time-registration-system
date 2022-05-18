@@ -1,6 +1,4 @@
-package com.example.webworkingtimeregistrationsystem.system.events;
-
-import com.example.webworkingtimeregistrationsystem.system.events.Event;
+package com.example.webworkingtimeregistrationsystem.system_DO_NOT_USE_NOW.events;
 
 public class Assigment extends Event {
 

@@ -1,6 +1,6 @@
-package com.example.webworkingtimeregistrationsystem.system.calendar;
+package com.example.webworkingtimeregistrationsystem.system_DO_NOT_USE_NOW.calendar;
 
-import com.example.webworkingtimeregistrationsystem.system.events.Event;
+import com.example.webworkingtimeregistrationsystem.system_DO_NOT_USE_NOW.events.Event;
 
 import java.util.ArrayList;
 
