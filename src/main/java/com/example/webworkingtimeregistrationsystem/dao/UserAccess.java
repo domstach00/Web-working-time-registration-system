@@ -28,11 +28,11 @@ public class UserAccess implements UserDao {
 					"(Email, Password, FirstName, LastName, PhoneNr, Fk_role) " +
 					"VALUES (%s, %s, %s, %s, %s, %d)")
 					.formatted(
-							DataSource.formatToInsert(user.getEmail()),
-							DataSource.formatToInsert(user.getPassword()),
-							DataSource.formatToInsert(user.getFirstName()),
-							DataSource.formatToInsert(user.getLastName()),
-							DataSource.formatToInsert(user.getPhoneNr()),
+							DataSource.formatStringToInsert(user.getEmail()),
+							DataSource.formatStringToInsert(user.getPassword()),
+							DataSource.formatStringToInsert(user.getFirstName()),
+							DataSource.formatStringToInsert(user.getLastName()),
+							DataSource.formatStringToInsert(user.getPhoneNr()),
 							user.getFk_role()
 					);
 			statement.executeUpdate(query);

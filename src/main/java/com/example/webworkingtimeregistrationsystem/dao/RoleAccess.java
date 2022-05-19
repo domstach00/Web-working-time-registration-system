@@ -1,26 +1,26 @@
 package com.example.webworkingtimeregistrationsystem.dao;
 
 import com.example.webworkingtimeregistrationsystem.datasource.DataSource;
-import com.example.webworkingtimeregistrationsystem.model.DayOffType;
+import com.example.webworkingtimeregistrationsystem.model.Role;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DayOffTypeAccess implements DayOffTypeDao{
+public class RoleAccess implements RoleDao {
     private final String url = DataSource.url;
 
     @Override
-    public boolean insertDayOffType(DayOffType dayOffType) {
+    public boolean insertRole(Role role) {
         try {
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
-            String query = ("INSERT INTO DayOffType " +
-                    "(DayOffTypeName, Description) " +
-                    "VALUES (%s, %s)")
+            String query = ("INSERT INTO Role" +
+                    "(RoleName, AccessLevel) " +
+                    "VALUES (%s, %d)")
                     .formatted(
-                            DataSource.formatStringToInsert(dayOffType.getDayOffTypeName()),
-                            DataSource.formatStringToInsert(dayOffType.getDescription())
+                            DataSource.formatStringToInsert(role.getRoleName()),
+                            role.getAccessLevel()
                     );
             statement.executeUpdate(query);
 
@@ -32,20 +32,20 @@ public class DayOffTypeAccess implements DayOffTypeDao{
     }
 
     @Override
-    public List<DayOffType> selectDayOffTypes() {
-        List<DayOffType> resoult = new ArrayList<>();
+    public List<Role> selectRoles() {
+        List<Role> resoult = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM DayOffType";
+            String query = "SELECT * FROM Role";
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                DayOffType newDayOffType = new DayOffType(
-                                resultSet.getString("DayOffName"),
-                                resultSet.getString("Description"));
-                newDayOffType.setIdDOT(resultSet.getInt("IdDOT"));
-                resoult.add(newDayOffType);
+                Role newRole = new Role(
+                        resultSet.getString("RoleName"),
+                        resultSet.getInt("AccessLevel"));
+                newRole.setIdU(resultSet.getInt("IdR"));
+                resoult.add(newRole);
             }
 
         } catch (SQLException throwables) {
@@ -56,19 +56,19 @@ public class DayOffTypeAccess implements DayOffTypeDao{
     }
 
     @Override
-    public DayOffType selectDayOffType(int id) {
+    public Role selectRole(int id) {
         try {
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
-            String query = "SELECT IdDOT, DayOffTypeName, Description FROM DayOffType WHERE IdDOT = %d"
+            String query = "SELECT IdR, RoleName, AccessLevel FROM Role WHERE IdR = %d"
                     .formatted(id);
             ResultSet resultSet = statement.executeQuery(query);
 
-            DayOffType newDayOffType = new DayOffType(
-                    resultSet.getString("DayOffName"),
-                    resultSet.getString("Description"));
-            newDayOffType.setIdDOT(resultSet.getInt("IdDOT"));
-            return newDayOffType;
+            Role newRole = new Role(
+                    resultSet.getString("RoleName"),
+                    resultSet.getInt("AccessLevel"));
+            newRole.setIdU(resultSet.getInt("IdR"));
+            return newRole;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

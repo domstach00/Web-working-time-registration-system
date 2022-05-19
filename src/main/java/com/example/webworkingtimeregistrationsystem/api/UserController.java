@@ -24,6 +24,6 @@ public class UserController {
 
     @GetMapping("all")
     public List<User> getAllUsers(){
-        return userService.selectAllUsers();
+        return userService.selectUsers();
     }
 }

@@ -1,5 +1,5 @@
 CREATE TABLE Role (IdU INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, RoleName varchar(255) NOT NULL, AccessLevel integer(10) NOT NULL);
-CREATE TABLE "User" (IdU INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Email varchar(255) NOT NULL UNIQUE, Password integer(11) NOT NULL, FirstName varchar(255), LastName varchar(255), PhoneNr varchar(15), Fk_role integer(10) NOT NULL, FOREIGN KEY(Fk_role) REFERENCES Role(IdU));
+CREATE TABLE "User" (IdU INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Email varchar(255) NOT NULL UNIQUE, Password integer(11) NOT NULL, FirstName varchar(255), LastName varchar(255), PhoneNr varchar(15), Fk_role integer(10) NOT NULL, FOREIGN KEY(Fk_role) REFERENCES Role(IdR));
 CREATE TABLE ProjectGroup (IdPG INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ProjectName integer(11));
 CREATE TABLE Event (IdE INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Description varchar(255), StartDate date NOT NULL, EndDate date NOT NULL);
 CREATE TABLE Assigment (IdA INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, IsComplete integer(1) DEFAULT '0', Fk_ProjectGroup integer(10) NOT NULL, Fk_Event integer(10) NOT NULL, FOREIGN KEY(Fk_ProjectGroup) REFERENCES ProjectGroup(IdPG), FOREIGN KEY(Fk_Event) REFERENCES Event(IdE));

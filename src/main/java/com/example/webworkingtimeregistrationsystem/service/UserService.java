@@ -22,7 +22,7 @@ public class UserService {
         return userDao.insertUser(user);
     }
 
-    public List<User> selectAllUsers(){
+    public List<User> selectUsers(){
         return userDao.selectUsers();
     }
 

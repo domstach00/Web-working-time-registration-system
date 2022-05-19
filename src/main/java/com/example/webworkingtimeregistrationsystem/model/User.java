@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 public class User {
+    private int idU;
     @Pattern(regexp=".+@.+\\.[a-z]+", message="Invalid email address!")
     private String email;
     @NotBlank
@@ -36,6 +37,19 @@ public class User {
 //        this.email = email;
 //        this.password = password;
 //    }
+
+
+    public int getIdU() {
+        return idU;
+    }
+
+    public void setIdU(int idU) {
+        this.idU = idU;
+    }
+
+    public void setFk_role(Integer fk_role) {
+        this.fk_role = fk_role;
+    }
 
     public String getEmail() {
         return email;
