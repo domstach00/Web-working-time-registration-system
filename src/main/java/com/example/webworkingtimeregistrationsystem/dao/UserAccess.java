@@ -1,5 +1,6 @@
 package com.example.webworkingtimeregistrationsystem.dao;
 
+import com.example.webworkingtimeregistrationsystem.datasource.DataSource;
 import com.example.webworkingtimeregistrationsystem.model.User;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Repository("UserAccess")
 public class UserAccess implements UserDao {
-	private final String url = "jdbc:sqlite:src/database/project.db";
+	private final String url = DataSource.url;
 
 //	public static void main(String[] args) {
 //		UserAccessService userAccessService = new UserAccessService();
@@ -25,23 +26,22 @@ public class UserAccess implements UserDao {
 			Statement statement = connection.createStatement();
             String query = ("INSERT INTO Users " +
 					"(Email, Password, FirstName, LastName, PhoneNr, Fk_role) " +
-					"VALUES ('%s', '%s', %s, %s, %s, %d)")
+					"VALUES (%s, %s, %s, %s, %s, %d)")
 					.formatted(
-							user.getEmail(),
-							user.getPassword(),
-							formatToInsert(user.getFirstName()),
-							formatToInsert(user.getLastName()),
-							formatToInsert(user.getPhoneNr()),
+							DataSource.formatToInsert(user.getEmail()),
+							DataSource.formatToInsert(user.getPassword()),
+							DataSource.formatToInsert(user.getFirstName()),
+							DataSource.formatToInsert(user.getLastName()),
+							DataSource.formatToInsert(user.getPhoneNr()),
 							user.getFk_role()
 					);
 			statement.executeUpdate(query);
-			return true;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
-    }
+		return true;
+	}
 
 	@Override
 	public List<User> selectUsers() {
@@ -67,6 +67,7 @@ public class UserAccess implements UserDao {
 
 		} catch (SQLException throwables) {
 			throwables.printStackTrace();
+			return null;
 		}
 		return resoult;
 	}
@@ -120,7 +121,10 @@ public class UserAccess implements UserDao {
 		try {
 			Connection connection = DriverManager.getConnection(url);
 			Statement statement = connection.createStatement();
-			String query = "SELECT Email, Password, FirstName, LastName, PhoneNr, Fk_role FROM Users WHERE Email = '%s' AND Password = '%s'"
+			String query = (
+					"SELECT Email, Password, FirstName, LastName, PhoneNr, Fk_role " +
+					"FROM Users WHERE Email = '%s' AND Password = '%s'"
+			)
 					.formatted(email, password);
 			ResultSet resultSet = statement.executeQuery(query);
 			return new User(
@@ -137,10 +141,21 @@ public class UserAccess implements UserDao {
 		}
 	}
 
-	// Prepere String value to insert into query - if it's null we dont use '' in insert
-	public String formatToInsert(String input){
-		if (input == null)
-			return null;
-		return  "'" + input + "'";
+	// TODO: User update
+	@Override
+	public boolean updateUser(User user) {
+		if (user == null)
+			return false;
+
+		try {
+			Connection connection = DriverManager.getConnection(url);
+			Statement statement = connection.createStatement();
+			String query = "UPDATE Users SET %s = %s WHERE Email = '%s'".formatted("", "", user.getEmail());
+			statement.executeUpdate(query);
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 }

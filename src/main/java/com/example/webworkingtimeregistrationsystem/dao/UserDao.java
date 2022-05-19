@@ -10,5 +10,5 @@ public interface UserDao {
     User selectUser(int id);
     User selectUser(String email);
     User selectUser(String email, String password);
-
+    boolean updateUser(User user);
 }

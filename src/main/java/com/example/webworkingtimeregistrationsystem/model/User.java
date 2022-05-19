@@ -2,8 +2,13 @@ package com.example.webworkingtimeregistrationsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 public class User {
+    @Pattern(regexp=".+@.+\\.[a-z]+", message="Invalid email address!")
     private String email;
+    @NotBlank
     private String password;
     private String firstName;
     private String lastName;
