@@ -22,7 +22,8 @@ public final class DataSource {
 
     @NotNull
     public static String formatDateToInsert(Date input){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         return formatter.format(input);
     }
+
 }

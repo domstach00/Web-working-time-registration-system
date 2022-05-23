@@ -47,7 +47,7 @@ public class Event {
 
     public Date getDateFromString(String strDate) {
         try {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(strDate);
+            return new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
 
         } catch (ParseException e) {
             e.printStackTrace();
