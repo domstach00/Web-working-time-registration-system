@@ -6,4 +6,6 @@ public class DayOff{
     private int fk_event;
     private int fk_user;
 
+    // TODO: DayOff model
+
 }

@@ -19,7 +19,7 @@ public class AssigmentAccess extends EventAccess implements AssigmentDao {
         try {
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
-            // TODO: Do query
+            // TODO: insertAssigment
             String query = "";
             statement.executeUpdate(query);
 
@@ -59,11 +59,13 @@ public class AssigmentAccess extends EventAccess implements AssigmentDao {
 
     @Override
     public List<Assigment> selectAssigments(Date startDate, Date endDate) {
+        // TODO: selectAssigments
         return null;
     }
 
     @Override
     public Assigment selectAssigment (int id) {
+        // TODO: selectAssigments by id
         return null;
     }
 }
