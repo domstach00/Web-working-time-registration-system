@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,5 +20,9 @@ public class AssigmentService {
 
     public List<Assigment> selectAssigments(){
         return assigmentDao.selectAssigments();
+    }
+
+    public List<Assigment> selectAssigments(Date startDate, Date endDate) {
+        return assigmentDao.selectAssigments(startDate, endDate);
     }
 }
