@@ -13,6 +13,10 @@ public class ProjectGroup {
         this.projectName = projectName;
     }
 
+    public void setIdPG(int idPG) {
+        this.idPG = idPG;
+    }
+
     public int getIdPG() {
         return idPG;
     }
@@ -24,6 +28,5 @@ public class ProjectGroup {
     public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
-
 
 }

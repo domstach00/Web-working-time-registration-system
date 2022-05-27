@@ -32,13 +32,6 @@ public class User {
         this.fk_role = fk_role;
     }
 
-//    public User(@JsonProperty("email") String email,
-//                @JsonProperty("password") String password) {
-//        this.email = email;
-//        this.password = password;
-//    }
-
-
     public int getIdU() {
         return idU;
     }

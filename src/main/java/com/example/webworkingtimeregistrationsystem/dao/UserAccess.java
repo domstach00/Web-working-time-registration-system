@@ -12,13 +12,6 @@ import java.util.List;
 public class UserAccess implements UserDao {
 	private final String url = DataSource.url;
 
-//	public static void main(String[] args) {
-//		UserAccessService userAccessService = new UserAccessService();
-//		User user = new User("TestMailNewsdXXX", "PAsswdX");
-//		userAccessService.insertUser(user);
-//
-//	}
-
     @Override
     public boolean insertUser(User user) {
         try {
@@ -49,20 +42,20 @@ public class UserAccess implements UserDao {
 		try {
 			Connection connection = DriverManager.getConnection(url);
 			Statement statement = connection.createStatement();
-			String query = "SELECT Email, Password, FirstName, LastName, PhoneNr, Fk_role FROM Users";
+			String query = "SELECT * FROM Users";
 			ResultSet resultSet = statement.executeQuery(query);
 
 			while (resultSet.next()){
-				resoult.add(
-						new User(
-								resultSet.getString("Email"),
-								resultSet.getString("Password"),
-								resultSet.getString("FirstName"),
-								resultSet.getString("LastName"),
-								resultSet.getString("PhoneNr"),
-								resultSet.getInt("Fk_role")
-						)
+				User newUser = new User(
+						resultSet.getString("Email"),
+						resultSet.getString("Password"),
+						resultSet.getString("FirstName"),
+						resultSet.getString("LastName"),
+						resultSet.getString("PhoneNr"),
+						resultSet.getInt("Fk_role")
 				);
+				newUser.setIdU(resultSet.getInt("IdU"));
+				resoult.add(newUser);
 			}
 
 		} catch (SQLException throwables) {
@@ -80,7 +73,7 @@ public class UserAccess implements UserDao {
 			String query = "SELECT Email, Password, FirstName, LastName, PhoneNr, Fk_role FROM Users WHERE IdU = %d"
 					.formatted(id);
 			ResultSet resultSet = statement.executeQuery(query);
-			return new User(
+			User newUser = new User(
 					resultSet.getString("Email"),
 					resultSet.getString("Password"),
 					resultSet.getString("FirstName"),
@@ -88,6 +81,8 @@ public class UserAccess implements UserDao {
 					resultSet.getString("PhoneNr"),
 					resultSet.getInt("Fk_role")
 			);
+			newUser.setIdU(resultSet.getInt("IdU"));
+			return newUser;
 		} catch (SQLException throwables) {
 			throwables.printStackTrace();
 			return null;
@@ -102,7 +97,7 @@ public class UserAccess implements UserDao {
 			String query = "SELECT Email, Password, FirstName, LastName, PhoneNr, Fk_role FROM Users WHERE Email = '%s'"
 					.formatted(email);
 			ResultSet resultSet = statement.executeQuery(query);
-			return new User(
+			User newUser = new User(
 					resultSet.getString("Email"),
 					resultSet.getString("Password"),
 					resultSet.getString("FirstName"),
@@ -110,6 +105,8 @@ public class UserAccess implements UserDao {
 					resultSet.getString("PhoneNr"),
 					resultSet.getInt("Fk_role")
 			);
+			newUser.setIdU(resultSet.getInt("IdU"));
+			return newUser;
 		} catch (SQLException throwables) {
 			throwables.printStackTrace();
 			return null;
@@ -127,7 +124,7 @@ public class UserAccess implements UserDao {
 			)
 					.formatted(email, password);
 			ResultSet resultSet = statement.executeQuery(query);
-			return new User(
+			User newUser = new User(
 					resultSet.getString("Email"),
 					resultSet.getString("Password"),
 					resultSet.getString("FirstName"),
@@ -135,6 +132,8 @@ public class UserAccess implements UserDao {
 					resultSet.getString("PhoneNr"),
 					resultSet.getInt("Fk_role")
 			);
+			newUser.setIdU(resultSet.getInt("IdU"));
+			return newUser;
 		} catch (SQLException throwables) {
 			throwables.printStackTrace();
 			return null;
