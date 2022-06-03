@@ -2,11 +2,13 @@ package com.example.webworkingtimeregistrationsystem.dao;
 
 import com.example.webworkingtimeregistrationsystem.datasource.DataSource;
 import com.example.webworkingtimeregistrationsystem.model.DayOffType;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository("DayOffTypeAccess")
 public class DayOffTypeAccess implements DayOffTypeDao{
     private final String url = DataSource.url;
 

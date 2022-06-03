@@ -2,11 +2,13 @@ package com.example.webworkingtimeregistrationsystem.dao;
 
 import com.example.webworkingtimeregistrationsystem.datasource.DataSource;
 import com.example.webworkingtimeregistrationsystem.model.ProjectGroup;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository("ProjectGroupAccess")
 public class ProjectGroupAccess implements ProjectGroupDao {
     private final static String url = DataSource.url;
 

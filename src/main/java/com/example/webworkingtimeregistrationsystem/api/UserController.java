@@ -1,15 +1,11 @@
 package com.example.webworkingtimeregistrationsystem.api;
 
-import com.example.webworkingtimeregistrationsystem.datasource.DataSource;
 import com.example.webworkingtimeregistrationsystem.model.User;
 import com.example.webworkingtimeregistrationsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("api/v1/user")
 @RestController

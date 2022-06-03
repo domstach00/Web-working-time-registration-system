@@ -4,11 +4,13 @@ import com.example.webworkingtimeregistrationsystem.datasource.DataSource;
 import com.example.webworkingtimeregistrationsystem.model.ProjectGroup;
 import com.example.webworkingtimeregistrationsystem.model.User;
 import com.example.webworkingtimeregistrationsystem.model.User_ProjectGroup;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository("User_ProjectGroupAccess")
 public class User_ProjectGroupAccess implements User_ProjectGroupDao {
     private final static String url = DataSource.url;
 
@@ -65,19 +67,16 @@ public class User_ProjectGroupAccess implements User_ProjectGroupDao {
             String query = "SELECT UserIdU FROM User_ProjectGroup";
             ResultSet resultSet = statement.executeQuery(query);
 
-            while (resultSet.next()) {
+            while (resultSet.next())
                 userIdList.add(resultSet.getInt("UserIdU"));
-            }
+
             resultSet.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        for (Integer id : userIdList) {
-            result.add(
-                    userAccess.selectUser(id)
-            );
-        }
+        for (Integer id : userIdList)
+            result.add(userAccess.selectUser(id));
 
         return result;
     }
@@ -93,19 +92,17 @@ public class User_ProjectGroupAccess implements User_ProjectGroupDao {
             String query = "SELECT ProjectGroupIdPG FROM User_ProjectGroup";
             ResultSet resultSet = statement.executeQuery(query);
 
-            while (resultSet.next()) {
+            while (resultSet.next())
                 projectIdList.add(resultSet.getInt("ProjectGroupIdPG"));
-            }
+
             resultSet.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        for (Integer id : projectIdList) {
-            result.add(
-                    projectGroupAccess.selectProjectGroup(id)
-            );
-        }
+        for (Integer id : projectIdList)
+            result.add(projectGroupAccess.selectProjectGroup(id));
+
 
         return result;
     }

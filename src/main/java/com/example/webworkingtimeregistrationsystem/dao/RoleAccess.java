@@ -2,11 +2,13 @@ package com.example.webworkingtimeregistrationsystem.dao;
 
 import com.example.webworkingtimeregistrationsystem.datasource.DataSource;
 import com.example.webworkingtimeregistrationsystem.model.Role;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository("RoleAccess")
 public class RoleAccess implements RoleDao {
     private final String url = DataSource.url;
 
