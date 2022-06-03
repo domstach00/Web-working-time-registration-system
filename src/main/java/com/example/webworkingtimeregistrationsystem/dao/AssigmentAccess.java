@@ -19,8 +19,16 @@ public class AssigmentAccess extends EventAccess implements AssigmentDao {
         try {
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
-            // TODO: insertAssigment
-            String query = "";
+            insertEvent(assigment.getEvetFromAssigment());
+            int idEvent = idEvent(assigment.getEvetFromAssigment());
+            String query = ("INSERT INTO Assigment " +
+                    "(IsComplete, Fk_ProjectGroup, Fk_Event) " +
+                    "VALUES (%d, %d, %d)")
+                    .formatted(
+                            assigment.getIsComplete(),
+                            assigment.getFk_projectGroup(),
+                            idEvent
+                    );
             statement.executeUpdate(query);
 
         } catch (SQLException throwables) {
@@ -32,7 +40,7 @@ public class AssigmentAccess extends EventAccess implements AssigmentDao {
 
     @Override
     public List<Assigment> selectAssigments() {
-        List<Assigment> resoult = new ArrayList<>();
+        List<Assigment> result = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
@@ -48,18 +56,17 @@ public class AssigmentAccess extends EventAccess implements AssigmentDao {
                 newAssigment.setIdA(resultSet.getInt("IdA"));
                 newAssigment.setFk_event(resultSet.getInt("Fk_Event"));
                 newAssigment.setIdE(selectEvent(resultSet.getInt("Fk_Event")).getIdE());
-                resoult.add(newAssigment);
+                result.add(newAssigment);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            return null;
         }
-        return resoult;
+        return result;
     }
 
     @Override
     public List<Assigment> selectAssigments(Date startDate, Date endDate) {
-        List<Assigment> resoult = new ArrayList<>();
+        List<Assigment> result = new ArrayList<>();
         System.out.println(startDate);
         System.out.println(endDate);
         System.out.println(DataSource.formatDateToInsert(startDate));
@@ -86,18 +93,38 @@ public class AssigmentAccess extends EventAccess implements AssigmentDao {
                 newAssigment.setIdA(resultSet.getInt("IdA"));
                 newAssigment.setFk_event(resultSet.getInt("Fk_Event"));
                 newAssigment.setIdE(selectEvent(resultSet.getInt("Fk_Event")).getIdE());
-                resoult.add(newAssigment);
+                result.add(newAssigment);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return null;
         }
-        return resoult;
+        return result;
     }
 
     @Override
     public Assigment selectAssigment (int id) {
-        // TODO: selectAssigments by id
-        return null;
+        try {
+            Connection connection = DriverManager.getConnection(url);
+            Statement statement = connection.createStatement();
+            String query = ("SELECT * FROM Assigment " +
+                    "INNER JOIN Event E on E.IdE = Assigment.Fk_Event " +
+                    "WHERE IdA = %d")
+                    .formatted(id);
+            ResultSet resultSet = statement.executeQuery(query);
+
+            Assigment assigment = new Assigment(
+                    selectEvent(resultSet.getInt("Fk_Event")),
+                    resultSet.getInt("IsComplete"),
+                    resultSet.getInt("Fk_ProjectGroup")
+            );
+            assigment.setIdA(resultSet.getInt("IdA"));
+            assigment.setFk_event(resultSet.getInt("Fk_Event"));
+            assigment.setIdE(selectEvent(resultSet.getInt("Fk_Event")).getIdE());
+            return assigment;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
     }
 }

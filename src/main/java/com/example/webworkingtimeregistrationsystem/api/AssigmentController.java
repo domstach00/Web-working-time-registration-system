@@ -4,10 +4,7 @@ import com.example.webworkingtimeregistrationsystem.datasource.DataSource;
 import com.example.webworkingtimeregistrationsystem.model.Assigment;
 import com.example.webworkingtimeregistrationsystem.service.AssigmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +18,11 @@ public class AssigmentController {
     @Autowired
     public AssigmentController(AssigmentService assigmentService) {
         this.assigmentService = assigmentService;
+    }
+
+    @PostMapping()
+    public boolean insertAssigment(@RequestBody Assigment assigment) {
+        return this.assigmentService.insertAssigment(assigment);
     }
 
     @GetMapping
@@ -53,5 +55,9 @@ public class AssigmentController {
                 startDate,
                 endDate
         );
+    }
+
+    public List<Assigment> getAllAssigmentsTest() {
+        return null;
     }
 }

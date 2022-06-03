@@ -18,6 +18,10 @@ public class AssigmentService {
         this.assigmentDao = assigmentDao;
     }
 
+    public boolean insertAssigment(Assigment assigment) {
+        return assigmentDao.insertAssigment(assigment);
+    }
+
     public List<Assigment> selectAssigments(){
         return assigmentDao.selectAssigments();
     }

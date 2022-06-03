@@ -25,6 +25,14 @@ public class DayOff extends Event{
         this.fk_user = fk_user;
     }
 
+    public Event getEvetFromDayOff() {
+        return new Event(
+                getDescription(),
+                getStartDate(),
+                getEndDate()
+        );
+    }
+
     public int getIdDO() {
         return idDO;
     }

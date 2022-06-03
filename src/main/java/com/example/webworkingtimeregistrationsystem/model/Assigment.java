@@ -25,6 +25,14 @@ public class Assigment extends Event {
         this.fk_projectGroup = fk_projectGroup;
     }
 
+    public Event getEvetFromAssigment() {
+        return new Event(
+                getDescription(),
+                getStartDate(),
+                getEndDate()
+        );
+    }
+
     public int getIdA() {
         return idA;
     }

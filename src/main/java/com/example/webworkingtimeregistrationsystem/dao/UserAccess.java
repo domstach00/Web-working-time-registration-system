@@ -140,7 +140,6 @@ public class UserAccess implements UserDao {
 		}
 	}
 
-	// TODO: User update
 	@Override
 	public boolean updateUser(User user) {
 		if (user == null)

@@ -21,10 +21,22 @@ public final class DataSource {
         return  "'" + input + "'";
     }
 
-    @NotNull
-    public static String formatDateToInsert(Date input){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        return formatter.format(input);
+
+    public static long formatDateToInsert(Date date){
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return date.getTime();
+    }
+
+    public static long formatDateToInsert(String dateStr) {
+        try {
+            Date date;
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date = formatter.parse(dateStr);
+            return date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0L;
+        }
     }
 
     public static Date dateFromStrDate(String strDate) {

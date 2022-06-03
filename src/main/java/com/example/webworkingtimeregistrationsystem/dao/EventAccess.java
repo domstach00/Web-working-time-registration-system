@@ -115,4 +115,25 @@ public class EventAccess implements EventDao {
             return null;
         }
     }
+
+    @Override
+    public int idEvent(Event event) {
+        try {
+            Connection connection = DriverManager.getConnection(url);
+            Statement statement = connection.createStatement();
+            String query = "SELECT IdE FROM Event WHERE Description = %s AND StartDate = %s AND EndDate = %s"
+                            .formatted(
+                                    DataSource.formatStringToInsert(event.getDescription()),
+                                    DataSource.formatDateToInsert(event.getStartDate()),
+                                    DataSource.formatDateToInsert(event.getEndDate())
+                            );
+            ResultSet resultSet = statement.executeQuery(query);
+            int result = resultSet.getInt("IdE");
+            resultSet.close();
+            return result;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return 0;
+        }
+    }
 }
