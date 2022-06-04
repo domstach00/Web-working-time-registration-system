@@ -16,21 +16,25 @@ public class ProjectGroupController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public boolean insertProjectGroup(@RequestBody ProjectGroup projectGroup) {
         return this.projectGroupService.insertProjectGroup(projectGroup);
     }
 
     @GetMapping("all")
+    @CrossOrigin(origins = "http://localhost:8080")
     public List<ProjectGroup> selectProjectGroups(){
         return this.projectGroupService.selectProjectGroups();
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public ProjectGroup selectProjectGroup(@RequestParam int id) {
         return this.projectGroupService.selectProjectGroup(id);
     }
 
     @GetMapping("project-name")
+    @CrossOrigin(origins = "http://localhost:8080")
     public ProjectGroup selectProjectGroup(@RequestParam String projectName) {
         return this.projectGroupService.selectProjectGroup(projectName);
     }

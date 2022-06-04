@@ -20,11 +20,13 @@ public class AssigmentController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public boolean insertAssigment(@RequestBody Assigment assigment) {
         return this.assigmentService.insertAssigment(assigment);
     }
 
     @GetMapping("all")
+    @CrossOrigin(origins = "http://localhost:8080")
     public List<Assigment> selectAssigments(@RequestParam(required = false) String startDateInput,
                                             @RequestParam(required = false) String endDateInput){
 
@@ -54,11 +56,13 @@ public class AssigmentController {
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public Assigment selectAssigment(@RequestParam int id) {
         return this.assigmentService.selectAssigments(id);
     }
 
     @PostMapping("update-state")
+    @CrossOrigin(origins = "http://localhost:8080")
     public boolean updateState(@RequestParam int id) {
         return this.assigmentService.updateState(id);
     }

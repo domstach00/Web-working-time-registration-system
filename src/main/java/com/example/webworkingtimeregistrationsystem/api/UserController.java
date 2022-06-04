@@ -18,32 +18,38 @@ public class UserController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public boolean insertUser(@RequestBody User user){
         return userService.insertUser(user);
     }
 
     @GetMapping("all")
+    @CrossOrigin(origins = "http://localhost:8080")
     public List<User> selectUsers(){
         return userService.selectUsers();
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public User selectUser(@RequestParam int id) {
         return this.userService.selectUser(id);
     }
 
     @GetMapping("email")
+    @CrossOrigin(origins = "http://localhost:8080")
     public User selectUser(@RequestParam String email) {
         return this.userService.selectUser(email);
     }
 
     @GetMapping("login")
+    @CrossOrigin(origins = "http://localhost:8080")
     public User selectUser(@RequestParam String email,
                            @RequestParam String password) {
         return this.userService.selectUser(email, password);
     }
 
     @PostMapping("update")
+    @CrossOrigin(origins = "http://localhost:8080")
     public boolean updateUser(@RequestBody User user) {
         return this.userService.updateUser(user);
     }

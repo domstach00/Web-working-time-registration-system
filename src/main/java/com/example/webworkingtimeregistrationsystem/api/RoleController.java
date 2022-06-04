@@ -16,21 +16,25 @@ public class RoleController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public boolean insertRole(@RequestBody Role role) {
         return this.roleService.insertRole(role);
     }
 
     @GetMapping("all")
+    @CrossOrigin(origins = "http://localhost:8080")
     public List<Role> selectRoles() {
         return this.roleService.selectRoles();
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public Role selectRole(int id) {
         return this.roleService.selectRole(id);
     }
 
     @GetMapping("accesslvl")
+    @CrossOrigin(origins = "http://localhost:8080")
     public int getAccessLevel(@RequestParam int id) {
         return this.roleService.getAccessLevel(id);
     }

@@ -18,21 +18,25 @@ public class User_ProjectGroupController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public boolean insertUser_ProjectGroup(@RequestBody User_ProjectGroup user_projectGroup) {
         return this.u_pgService.insertUser_ProjectGroup(user_projectGroup);
     }
 
     @GetMapping("all")
+    @CrossOrigin(origins = "http://localhost:8080")
     public List<User_ProjectGroup> selectU_PGs() {
         return this.u_pgService.selectU_PGs();
     }
 
     @GetMapping("users")
+    @CrossOrigin(origins = "http://localhost:8080")
     public List<User> selectUsersInProject(@RequestParam int id) {
         return this.u_pgService.selectUsersInProject(id);
     }
 
     @GetMapping("projects")
+    @CrossOrigin(origins = "http://localhost:8080")
     public List<ProjectGroup> selectProjectsWithUser(@RequestParam int id) {
         return this.u_pgService.selectProjectsWithUser(id);
     }

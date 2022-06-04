@@ -20,6 +20,7 @@ public class EventController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public boolean insertEvent(@RequestBody Event event) {
         return eventService.insertEvent(event);
     }
@@ -55,6 +56,7 @@ public class EventController {
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public Event selectEvent(@RequestParam int id) {
         return this.eventService.selectEvent(id);
     }

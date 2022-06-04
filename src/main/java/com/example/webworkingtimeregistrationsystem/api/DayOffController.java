@@ -20,11 +20,13 @@ public class DayOffController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public boolean insertDayOff(@RequestBody DayOff dayOff) {
         return this.dayOffService.insertDayOff(dayOff);
     }
 
     @GetMapping("all")
+    @CrossOrigin(origins = "http://localhost:8080")
     public List<DayOff> selectDayOff(@RequestParam(required = false) String startDateInput,
                                      @RequestParam(required = false) String endDateInput) {
 
@@ -55,6 +57,7 @@ public class DayOffController {
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public DayOff selectDayOff(@RequestParam int id){
         return this.dayOffService.selectDayOff(id);
     }

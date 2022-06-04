@@ -16,16 +16,19 @@ public class DayOffTypeController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public boolean insertDayOffType(@RequestBody DayOffType dayOffType) {
         return this.dayOffTypeService.insertDayOffType(dayOffType);
     }
 
     @GetMapping("all")
+    @CrossOrigin(origins = "http://localhost:8080")
     public List<DayOffType> selectDayOffType() {
         return this.dayOffTypeService.selectDayOffType();
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:8080")
     public DayOffType selectDayOffType(@RequestParam int id) {
         return this.dayOffTypeService.selectDayOffType(id);
     }
