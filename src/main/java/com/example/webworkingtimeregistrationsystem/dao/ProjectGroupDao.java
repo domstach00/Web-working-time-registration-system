@@ -9,5 +9,5 @@ public interface ProjectGroupDao {
     boolean insertProjectGroup(ProjectGroup projectGroup);
     List<ProjectGroup> selectProjectGroups();
     ProjectGroup selectProjectGroup(int id);
-    ProjectGroup slectProjectGroup(String projectName);
+    ProjectGroup selectProjectGroup(String projectName);
 }

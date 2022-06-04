@@ -8,4 +8,5 @@ public interface RoleDao {
     boolean insertRole(Role role);
     List<Role> selectRoles();
     Role selectRole(int id);
+    int getAccessLevel(int idRole);
 }

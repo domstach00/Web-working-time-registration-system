@@ -2,6 +2,7 @@ package com.example.webworkingtimeregistrationsystem.dao;
 
 import com.example.webworkingtimeregistrationsystem.datasource.DataSource;
 import com.example.webworkingtimeregistrationsystem.model.DayOff;
+import com.example.webworkingtimeregistrationsystem.model.Event;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -30,7 +31,6 @@ public class DayOffAccess extends EventAccess implements DayOffDao {
                             dayOff.getFk_user()
                     );
             statement.executeUpdate(query);
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
@@ -44,18 +44,27 @@ public class DayOffAccess extends EventAccess implements DayOffDao {
         try {
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM DayOff";
+            String query = "SELECT * FROM DayOff " +
+                    "INNER JOIN Event E on E.IdE = DayOff.Fk_Event";
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
+                Event event = new Event(
+                        resultSet.getString("Description"),
+                        resultSet.getDate("StartDate").toString(),
+                        resultSet.getDate("EndDate").toString()
+                );
+                event.setIdE(resultSet.getInt("IdE"));
+
                 DayOff dayOff = new DayOff(
-                        selectEvent(resultSet.getInt("Fk_Event")),
+                        event,
                         resultSet.getInt("Fk_DayOffType"),
                         resultSet.getInt("Fk_User")
                 );
                 dayOff.setIdDO(resultSet.getInt("IdDO"));
                 dayOff.setFk_event(resultSet.getInt("Fk_Event"));
                 dayOff.setIdE(selectEvent(resultSet.getInt("Fk_Event")).getIdE());
+                result.add(dayOff);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -71,8 +80,8 @@ public class DayOffAccess extends EventAccess implements DayOffDao {
             Statement statement = connection.createStatement();
             String query = ("SELECT * FROM DayOff " +
                     "INNER JOIN Event E on E.IdE = DayOff.Fk_Event " +
-                    "WHERE E.StartDate <= %s " +
-                    "AND E.EndDate >= %s")
+                    "WHERE E.StartDate >= %s " +
+                    "AND E.EndDate <= %s")
                     .formatted(
                             DataSource.formatDateToInsert(startDate),
                             DataSource.formatDateToInsert(endDate)
@@ -80,14 +89,22 @@ public class DayOffAccess extends EventAccess implements DayOffDao {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
+                Event event = new Event(
+                        resultSet.getString("Description"),
+                        resultSet.getDate("StartDate").toString(),
+                        resultSet.getDate("EndDate").toString()
+                );
+                event.setIdE(resultSet.getInt("IdE"));
+
                 DayOff dayOff = new DayOff(
-                        selectEvent(resultSet.getInt("Fk_Event")),
+                        event,
                         resultSet.getInt("Fk_DayOffType"),
                         resultSet.getInt("Fk_User")
                 );
                 dayOff.setIdDO(resultSet.getInt("IdDO"));
                 dayOff.setFk_event(resultSet.getInt("Fk_Event"));
                 dayOff.setIdE(selectEvent(resultSet.getInt("Fk_Event")).getIdE());
+                result.add(dayOff);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -104,17 +121,23 @@ public class DayOffAccess extends EventAccess implements DayOffDao {
                     "WHERE IdDO = %d")
                     .formatted(id);
             ResultSet resultSet = statement.executeQuery(query);
+            Event event = new Event(
+                    resultSet.getString("Description"),
+                    resultSet.getDate("StartDate").toString(),
+                    resultSet.getDate("EndDate").toString()
+            );
+            event.setIdE(resultSet.getInt("IdE"));
 
             DayOff dayOff = new DayOff(
-                    selectEvent(resultSet.getInt("Fk_Event")),
+                    event,
                     resultSet.getInt("Fk_DayOffType"),
                     resultSet.getInt("Fk_User")
             );
             dayOff.setIdDO(resultSet.getInt("IdDO"));
             dayOff.setFk_event(resultSet.getInt("Fk_Event"));
             dayOff.setIdE(selectEvent(resultSet.getInt("Fk_Event")).getIdE());
+            resultSet.close();
             return dayOff;
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return null;

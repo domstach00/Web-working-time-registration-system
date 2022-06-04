@@ -3,6 +3,7 @@ package com.example.webworkingtimeregistrationsystem.dao;
 import com.example.webworkingtimeregistrationsystem.model.Assigment;
 
 import com.example.webworkingtimeregistrationsystem.datasource.DataSource;
+import com.example.webworkingtimeregistrationsystem.model.Event;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -44,20 +45,28 @@ public class AssigmentAccess extends EventAccess implements AssigmentDao {
         try {
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM Assigment";
+            String query = "SELECT * FROM Assigment INNER JOIN Event E on E.IdE = Assigment.Fk_Event";
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                Assigment newAssigment = new Assigment(
-                        selectEvent(resultSet.getInt("Fk_Event")),
+                Event event = new Event(
+                        resultSet.getString("Description"),
+                        resultSet.getDate("StartDate").toString(),
+                        resultSet.getDate("EndDate").toString()
+                );
+                event.setIdE(resultSet.getInt("IdE"));
+
+                Assigment assigment = new Assigment(
+                        event,
                         resultSet.getInt("IsComplete"),
                         resultSet.getInt("Fk_ProjectGroup")
                 );
-                newAssigment.setIdA(resultSet.getInt("IdA"));
-                newAssigment.setFk_event(resultSet.getInt("Fk_Event"));
-                newAssigment.setIdE(selectEvent(resultSet.getInt("Fk_Event")).getIdE());
-                result.add(newAssigment);
+                assigment.setIdA(resultSet.getInt("IdA"));
+                assigment.setFk_event(resultSet.getInt("Fk_Event"));
+                assigment.setIdE(selectEvent(resultSet.getInt("Fk_Event")).getIdE());
+                result.add(assigment);
             }
+            resultSet.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -67,17 +76,13 @@ public class AssigmentAccess extends EventAccess implements AssigmentDao {
     @Override
     public List<Assigment> selectAssigments(Date startDate, Date endDate) {
         List<Assigment> result = new ArrayList<>();
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(DataSource.formatDateToInsert(startDate));
-        System.out.println(DataSource.formatDateToInsert(endDate));
         try {
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
             String query = ("SELECT * FROM Assigment " +
                     "INNER JOIN Event E on E.IdE = Assigment.Fk_Event " +
-                    "WHERE E.StartDate <= %s " +
-                    "AND E.EndDate >= %s")
+                    "WHERE E.StartDate >= %s " +
+                    "AND E.EndDate <= %s")
                     .formatted(
                             DataSource.formatDateToInsert(startDate),
                             DataSource.formatDateToInsert(endDate)
@@ -85,16 +90,24 @@ public class AssigmentAccess extends EventAccess implements AssigmentDao {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                Assigment newAssigment = new Assigment(
-                        selectEvent(resultSet.getInt("Fk_Event")),
+                Event event = new Event(
+                        resultSet.getString("Description"),
+                        resultSet.getDate("StartDate").toString(),
+                        resultSet.getDate("EndDate").toString()
+                );
+                event.setIdE(resultSet.getInt("IdE"));
+
+                Assigment assigment = new Assigment(
+                        event,
                         resultSet.getInt("IsComplete"),
                         resultSet.getInt("Fk_ProjectGroup")
                 );
-                newAssigment.setIdA(resultSet.getInt("IdA"));
-                newAssigment.setFk_event(resultSet.getInt("Fk_Event"));
-                newAssigment.setIdE(selectEvent(resultSet.getInt("Fk_Event")).getIdE());
-                result.add(newAssigment);
+                assigment.setIdA(resultSet.getInt("IdA"));
+                assigment.setFk_event(resultSet.getInt("Fk_Event"));
+                assigment.setIdE(selectEvent(resultSet.getInt("Fk_Event")).getIdE());
+                result.add(assigment);
             }
+            resultSet.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return null;
@@ -113,18 +126,44 @@ public class AssigmentAccess extends EventAccess implements AssigmentDao {
                     .formatted(id);
             ResultSet resultSet = statement.executeQuery(query);
 
+            Event event = new Event(
+                    resultSet.getString("Description"),
+                    resultSet.getDate("StartDate").toString(),
+                    resultSet.getDate("EndDate").toString()
+            );
+            event.setIdE(resultSet.getInt("IdE"));
+
             Assigment assigment = new Assigment(
-                    selectEvent(resultSet.getInt("Fk_Event")),
+                    event,
                     resultSet.getInt("IsComplete"),
                     resultSet.getInt("Fk_ProjectGroup")
             );
             assigment.setIdA(resultSet.getInt("IdA"));
             assigment.setFk_event(resultSet.getInt("Fk_Event"));
             assigment.setIdE(selectEvent(resultSet.getInt("Fk_Event")).getIdE());
+            resultSet.close();
             return assigment;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public boolean updateState(int id) {
+        try {
+            Connection connection = DriverManager.getConnection(url);
+            Statement statement = connection.createStatement();
+            String query = ("UPDATE Assigment " +
+                    "SET IsComplete = 1 " +
+                    "WHERE IdA = %d")
+                    .formatted(id);
+            statement.executeUpdate(query);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

@@ -19,14 +19,26 @@ public class UserService {
     }
 
     public boolean insertUser(User user){
-        return userDao.insertUser(user);
+        return this.userDao.insertUser(user);
     }
 
     public List<User> selectUsers(){
-        return userDao.selectUsers();
+        return this.userDao.selectUsers();
     }
 
     public User selectUser(int id){
-        return userDao.selectUser(id);
+        return this.userDao.selectUser(id);
+    }
+
+    public User selectUser(String email) {
+        return this.userDao.selectUser(email);
+    }
+
+    public User selectUser(String email, String password) {
+        return this.userDao.selectUser(email, password);
+    }
+
+    public boolean updateUser(User user) {
+        return this.userDao.updateUser(user);
     }
 }

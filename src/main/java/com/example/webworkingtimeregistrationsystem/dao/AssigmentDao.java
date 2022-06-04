@@ -10,4 +10,5 @@ public interface AssigmentDao {
     List<Assigment> selectAssigments();
     List<Assigment> selectAssigments (Date startDate, Date endDate);
     Assigment selectAssigment (int id);
+    boolean updateState(int id);
 }

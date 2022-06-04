@@ -37,7 +37,7 @@ public class ProjectGroupAccess implements ProjectGroupDao {
         try {
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
-            String query = "";
+            String query = "SELECT * FROM ProjectGroup";
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()){
@@ -49,6 +49,7 @@ public class ProjectGroupAccess implements ProjectGroupDao {
 
                 resoult.add(projectGroup);
             }
+            resultSet.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -59,11 +60,47 @@ public class ProjectGroupAccess implements ProjectGroupDao {
 
     @Override
     public ProjectGroup selectProjectGroup(int id) {
-        return null;
+        try {
+            Connection connection = DriverManager.getConnection(url);
+            Statement statement = connection.createStatement();
+            String query = ("SELECT * FROM ProjectGroup " +
+                    "WHERE IdPG = %d")
+                    .formatted(id);
+            ResultSet resultSet = statement.executeQuery(query);
+            ProjectGroup projectGroup = new ProjectGroup(
+                    resultSet.getString("ProjectName")
+            );
+            projectGroup.setIdPG(resultSet.getInt("IdPG"));
+
+            resultSet.close();
+            return projectGroup;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public ProjectGroup slectProjectGroup(String projectName) {
-        return null;
+    public ProjectGroup selectProjectGroup(String projectName) {
+        try {
+            Connection connection = DriverManager.getConnection(url);
+            Statement statement = connection.createStatement();
+            String query = ("SELECT * FROM ProjectGroup " +
+                    "WHERE ProjectName = %s")
+                    .formatted(projectName);
+            ResultSet resultSet = statement.executeQuery(query);
+            ProjectGroup projectGroup = new ProjectGroup(
+                    DataSource.formatStringToInsert(projectName)
+            );
+            projectGroup.setIdPG(resultSet.getInt("IdPG"));
+
+            resultSet.close();
+            return projectGroup;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
     }
 }

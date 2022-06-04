@@ -57,6 +57,7 @@ public class UserAccess implements UserDao {
 				newUser.setIdU(resultSet.getInt("IdU"));
 				resoult.add(newUser);
 			}
+			resultSet.close();
 
 		} catch (SQLException throwables) {
 			throwables.printStackTrace();
@@ -70,7 +71,7 @@ public class UserAccess implements UserDao {
 		try {
 			Connection connection = DriverManager.getConnection(url);
 			Statement statement = connection.createStatement();
-			String query = "SELECT Email, Password, FirstName, LastName, PhoneNr, Fk_role FROM Users WHERE IdU = %d"
+			String query = "SELECT IdU, Email, Password, FirstName, LastName, PhoneNr, Fk_role FROM Users WHERE IdU = %d"
 					.formatted(id);
 			ResultSet resultSet = statement.executeQuery(query);
 			User newUser = new User(
@@ -82,6 +83,7 @@ public class UserAccess implements UserDao {
 					resultSet.getInt("Fk_role")
 			);
 			newUser.setIdU(resultSet.getInt("IdU"));
+			resultSet.close();
 			return newUser;
 		} catch (SQLException throwables) {
 			throwables.printStackTrace();
@@ -94,7 +96,7 @@ public class UserAccess implements UserDao {
 		try {
 			Connection connection = DriverManager.getConnection(url);
 			Statement statement = connection.createStatement();
-			String query = "SELECT Email, Password, FirstName, LastName, PhoneNr, Fk_role FROM Users WHERE Email = '%s'"
+			String query = "SELECT IdU, Email, Password, FirstName, LastName, PhoneNr, Fk_role FROM Users WHERE Email = '%s'"
 					.formatted(email);
 			ResultSet resultSet = statement.executeQuery(query);
 			User newUser = new User(
@@ -106,6 +108,7 @@ public class UserAccess implements UserDao {
 					resultSet.getInt("Fk_role")
 			);
 			newUser.setIdU(resultSet.getInt("IdU"));
+			resultSet.close();
 			return newUser;
 		} catch (SQLException throwables) {
 			throwables.printStackTrace();
@@ -119,7 +122,7 @@ public class UserAccess implements UserDao {
 			Connection connection = DriverManager.getConnection(url);
 			Statement statement = connection.createStatement();
 			String query = (
-					"SELECT Email, Password, FirstName, LastName, PhoneNr, Fk_role " +
+					"SELECT IdU, Email, Password, FirstName, LastName, PhoneNr, Fk_role " +
 					"FROM Users WHERE Email = '%s' AND Password = '%s'"
 			)
 					.formatted(email, password);
@@ -133,6 +136,7 @@ public class UserAccess implements UserDao {
 					resultSet.getInt("Fk_role")
 			);
 			newUser.setIdU(resultSet.getInt("IdU"));
+			resultSet.close();
 			return newUser;
 		} catch (SQLException throwables) {
 			throwables.printStackTrace();
@@ -144,7 +148,7 @@ public class UserAccess implements UserDao {
 	public boolean updateUser(User user) {
 		if (user == null)
 			return false;
-
+		// TODO: Complete User update
 		try {
 			Connection connection = DriverManager.getConnection(url);
 			Statement statement = connection.createStatement();

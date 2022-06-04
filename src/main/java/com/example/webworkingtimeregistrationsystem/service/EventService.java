@@ -29,4 +29,8 @@ public class EventService {
     public List<Event> selectEvents(Date startDate, Date endDate) {
         return eventDao.selectEvents(startDate, endDate);
     }
+
+    public Event selectEvent(int id) {
+        return this.eventDao.selectEvent(id);
+    }
 }

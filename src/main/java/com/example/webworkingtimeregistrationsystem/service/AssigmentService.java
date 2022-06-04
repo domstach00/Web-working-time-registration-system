@@ -29,4 +29,12 @@ public class AssigmentService {
     public List<Assigment> selectAssigments(Date startDate, Date endDate) {
         return assigmentDao.selectAssigments(startDate, endDate);
     }
+
+    public Assigment selectAssigments(int id) {
+        return this.assigmentDao.selectAssigment(id);
+    }
+
+    public boolean updateState(int id) {
+        return this.assigmentDao.updateState(id);
+    }
 }

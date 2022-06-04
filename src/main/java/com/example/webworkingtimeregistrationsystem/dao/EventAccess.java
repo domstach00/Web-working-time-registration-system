@@ -54,6 +54,7 @@ public class EventAccess implements EventDao {
                 newEvent.setIdE(resultSet.getInt("IdE"));
                 resoult.add(newEvent);
             }
+            resultSet.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -86,6 +87,7 @@ public class EventAccess implements EventDao {
                 newEvent.setIdE(resultSet.getInt("IdE"));
                 resoult.add(newEvent);
             }
+            resultSet.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -108,6 +110,7 @@ public class EventAccess implements EventDao {
                     resultSet.getDate("StartDate").toString(),
                     resultSet.getDate("EndDate").toString());
             newEvent.setIdE(resultSet.getInt("IdE"));
+            resultSet.close();
             return newEvent;
 
         } catch (SQLException throwables) {

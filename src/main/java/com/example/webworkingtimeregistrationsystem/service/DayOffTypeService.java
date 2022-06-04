@@ -1,9 +1,12 @@
 package com.example.webworkingtimeregistrationsystem.service;
 
 import com.example.webworkingtimeregistrationsystem.dao.DayOffTypeDao;
+import com.example.webworkingtimeregistrationsystem.model.DayOffType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DayOffTypeService {
@@ -14,5 +17,15 @@ public class DayOffTypeService {
         this.dayOffTypeDao = dayOffTypeDao;
     }
 
-    // TODO: DayOffTypeService
+    public boolean insertDayOffType(DayOffType dayOffType) {
+        return this.dayOffTypeDao.insertDayOffType(dayOffType);
+    }
+
+    public List<DayOffType> selectDayOffType() {
+        return this.dayOffTypeDao.selectDayOffTypes();
+    }
+
+    public DayOffType selectDayOffType(int id) {
+        return this.dayOffTypeDao.selectDayOffType(id);
+    }
 }

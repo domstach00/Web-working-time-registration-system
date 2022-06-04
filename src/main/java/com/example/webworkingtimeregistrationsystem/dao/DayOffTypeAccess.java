@@ -44,11 +44,13 @@ public class DayOffTypeAccess implements DayOffTypeDao{
 
             while (resultSet.next()) {
                 DayOffType newDayOffType = new DayOffType(
-                                resultSet.getString("DayOffName"),
+                                resultSet.getString("DayOffTypeName"),
                                 resultSet.getString("Description"));
                 newDayOffType.setIdDOT(resultSet.getInt("IdDOT"));
                 resoult.add(newDayOffType);
             }
+            statement.close();
+            resultSet.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -67,9 +69,10 @@ public class DayOffTypeAccess implements DayOffTypeDao{
             ResultSet resultSet = statement.executeQuery(query);
 
             DayOffType newDayOffType = new DayOffType(
-                    resultSet.getString("DayOffName"),
+                    resultSet.getString("DayOffTypeName"),
                     resultSet.getString("Description"));
             newDayOffType.setIdDOT(resultSet.getInt("IdDOT"));
+            resultSet.close();
             return newDayOffType;
 
         } catch (SQLException throwables) {

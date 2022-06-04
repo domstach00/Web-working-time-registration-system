@@ -49,6 +49,7 @@ public class RoleAccess implements RoleDao {
                 newRole.setIdU(resultSet.getInt("IdR"));
                 resoult.add(newRole);
             }
+            resultSet.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -70,11 +71,31 @@ public class RoleAccess implements RoleDao {
                     resultSet.getString("RoleName"),
                     resultSet.getInt("AccessLevel"));
             newRole.setIdU(resultSet.getInt("IdR"));
+            resultSet.close();
             return newRole;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public int getAccessLevel(int idRole) {
+        try {
+            Connection connection = DriverManager.getConnection(url);
+            Statement statement = connection.createStatement();
+            String query = "SELECT AccessLevel FROM Role WHERE IdR = %d"
+                    .formatted(idRole);
+            ResultSet resultSet = statement.executeQuery(query);
+
+            int access = resultSet.getInt("AccessLevel");
+            resultSet.close();
+            return access;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return -1;
         }
     }
 }
