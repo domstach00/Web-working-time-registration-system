@@ -25,6 +25,7 @@ public class EventController {
     }
 
     @GetMapping("all")
+    @CrossOrigin(origins = "http://localhost:8080")
     public List<Event> selectEvents(@RequestParam(required = false) String startDateInput,
                                     @RequestParam(required = false) String endDateInput) {
         if (startDateInput == null && endDateInput == null)
