@@ -11,4 +11,5 @@ public interface EventDao {
     List<Event> selectEvents(Date startDate, Date endDate);
     Event selectEvent(int id);
     int idEvent(Event event);
+    boolean deleteEvent(int id);
 }

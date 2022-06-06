@@ -1,5 +1,6 @@
 package com.example.webworkingtimeregistrationsystem.api;
 
+import com.example.webworkingtimeregistrationsystem.model.Login;
 import com.example.webworkingtimeregistrationsystem.model.User;
 import com.example.webworkingtimeregistrationsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +42,10 @@ public class UserController {
         return this.userService.selectUser(email);
     }
 
-    @GetMapping("login")
+    @PostMapping("login")
     @CrossOrigin(origins = "http://localhost:8080")
-    public User selectUser(@RequestParam String email,
-                           @RequestParam String password) {
-        return this.userService.selectUser(email, password);
+    public User selectUser(@RequestBody Login login) {
+        return this.userService.selectUser(login.getEmail(), login.getPassword());
     }
 
     @PostMapping("update")

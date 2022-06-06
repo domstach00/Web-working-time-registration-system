@@ -60,4 +60,10 @@ public class EventController {
     public Event selectEvent(@RequestParam int id) {
         return this.eventService.selectEvent(id);
     }
+
+    @DeleteMapping
+    @CrossOrigin(origins = "http://localhost:8080")
+    public boolean deleteEvent(@RequestParam int id) {
+        return this.eventService.deleteEvent(id);
+    }
 }

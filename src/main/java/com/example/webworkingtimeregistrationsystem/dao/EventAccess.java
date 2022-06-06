@@ -139,4 +139,27 @@ public class EventAccess implements EventDao {
             return 0;
         }
     }
+
+    @Override
+    public boolean deleteEvent(int id) {
+        try {
+            Connection connection = DriverManager.getConnection(url);
+            Statement statement = connection.createStatement();
+            String query = ("DELETE FROM Assigment where Fk_Event = %d; " +
+                    "DELETE FROM DayOff WHERE Fk_Event = %d; " +
+                    "DELETE FROM Event WHERE IdE = %d")
+                    .formatted(
+                            id,
+                            id,
+                            id
+                    );
+            statement.executeUpdate(query);
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
