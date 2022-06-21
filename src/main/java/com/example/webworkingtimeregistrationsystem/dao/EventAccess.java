@@ -124,16 +124,13 @@ public class EventAccess implements EventDao {
         try {
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
-            String query = "SELECT IdE FROM Event WHERE Description = %s AND StartDate = %s AND EndDate = %s"
-                            .formatted(
-                                    DataSource.formatStringToInsert(event.getDescription()),
-                                    DataSource.formatDateToInsert(event.getStartDate()),
-                                    DataSource.formatDateToInsert(event.getEndDate())
-                            );
+            String query = "SELECT * FROM Event WHERE Description = %s"
+                    .formatted(DataSource.formatStringToInsert(event.getDescription())
+                    );
             ResultSet resultSet = statement.executeQuery(query);
-            int result = resultSet.getInt("IdE");
-            resultSet.close();
-            return result;
+
+            return resultSet.getInt("IdE");
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return 0;

@@ -37,4 +37,8 @@ public class EventService {
     public boolean deleteEvent(int id) {
         return this.eventDao.deleteEvent(id);
     }
+
+    public int idEvent(Event event) {
+        return eventDao.idEvent(event);
+    }
 }

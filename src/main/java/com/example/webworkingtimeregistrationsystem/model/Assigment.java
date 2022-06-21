@@ -12,7 +12,7 @@ public class Assigment extends Event {
                      @JsonProperty("startDate") String startDate,
                      @JsonProperty("endDate") String endDate,
                      @JsonProperty("isComplete") int isComplete,
-                     @JsonProperty("fk_projectGroup") int fk_projectGroup) {
+                     @JsonProperty(" ") int fk_projectGroup) {
         super(description, startDate, endDate);
         this.isComplete = isComplete;
         this.fk_event = super.getIdE();

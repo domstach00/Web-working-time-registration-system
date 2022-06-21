@@ -20,15 +20,30 @@ public class AssigmentAccess extends EventAccess implements AssigmentDao {
         try {
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
-            insertEvent(assigment.getEvetFromAssigment());
-            int idEvent = idEvent(assigment.getEvetFromAssigment());
+            String queryEvent = ("INSERT INTO Event " +
+                    "(Description, StartDate, EndDate) " +
+                    "VALUES (%s, %s, %s)")
+                    .formatted(
+                            DataSource.formatStringToInsert(assigment.getDescription()),
+                            DataSource.formatDateToInsert(assigment.getDateFromString(assigment.getStartDate())),
+                            DataSource.formatDateToInsert(assigment.getDateFromString(assigment.getEndDate()))
+                    );
+            statement.executeUpdate(queryEvent);
+            String newQuery = "SELECT IdE FROM Event WHERE Description = %s AND StartDate = %s AND EndDate = %s"
+                    .formatted(
+                            DataSource.formatStringToInsert(assigment.getDescription()),
+                            DataSource.formatDateToInsert(assigment.getStartDate()),
+                            DataSource.formatDateToInsert(assigment.getEndDate())
+                            );
+            int idE = statement.executeQuery(newQuery).getInt("IdE");
+
             String query = ("INSERT INTO Assigment " +
-                    "(IsComplete, Fk_ProjectGroup, Fk_Event) " +
-                    "VALUES (%d, %d, %d)")
+                    "(IsComplete, Fk_ProjectGroup, Fk_Event)" +
+                    "VALUES (%d, %d, %d) ")
                     .formatted(
                             assigment.getIsComplete(),
                             assigment.getFk_projectGroup(),
-                            idEvent
+                            idE
                     );
             statement.executeUpdate(query);
 

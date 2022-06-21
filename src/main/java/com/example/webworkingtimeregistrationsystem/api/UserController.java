@@ -4,11 +4,12 @@ import com.example.webworkingtimeregistrationsystem.model.Login;
 import com.example.webworkingtimeregistrationsystem.model.User;
 import com.example.webworkingtimeregistrationsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("api/v1/user")
+@RequestMapping(value = "api/v1/user")
 @RestController
 public class UserController {
     private final UserService userService;
@@ -42,7 +43,8 @@ public class UserController {
         return this.userService.selectUser(email);
     }
 
-    @PostMapping("login")
+//    @PostMapping("login")
+    @RequestMapping(value="/login", method = RequestMethod.POST, produces = "application/json", consumes = "text/plain;charset=UTF-8")
     @CrossOrigin(origins = "http://localhost:8080")
     public User selectUser(@RequestBody Login login) {
         return this.userService.selectUser(login.getEmail(), login.getPassword());
